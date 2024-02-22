@@ -9,6 +9,10 @@ Welcome to the Grin 'n Grill Backend project built in Golang! This repository co
 
 This backend system, developed in Golang, provides a seamless and secure experience for handling online orders, payment processing, and customer management. It serves as the backbone supporting the tech-driven feast of joy at Grin 'n Grill.
 
+## System Design and Architecture
+
+For a detailed view of the system design and architecture, please check the [System Design Document](https://www.figma.com/file/r4ytkkknzlOgmbP2bFTHnM/Grin-n'-GRiddle?type=whiteboard&node-id=0%3A1&t=uZMKGDKBBGG9pXWR-1).
+
 ## Features
 
 - **Order Management:** Efficient handling of online orders to streamline the restaurant's workflow.
