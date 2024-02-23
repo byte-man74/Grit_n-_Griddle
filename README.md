@@ -1,4 +1,4 @@
-# Grin 'n Grill Backend (Golang)
+# Grin 'n Grill Backend (Go)
 
 Welcome to the Grin 'n Grill Backend project built in Golang! This repository contains the backend infrastructure for Grin 'n Grill, a Naija-inspired culinary haven.
 
