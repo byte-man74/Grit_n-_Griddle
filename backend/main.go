@@ -1,5 +1,4 @@
-// /cmd/your-app/main.go
-
+// grab a coffee mehn
 package main
 
 import (
@@ -13,6 +12,8 @@ func checkHealth(c *gin.Context) {
 }
 func main() {
 	router := gin.Default()
+
+	//okay this guy works smoothly
 	router.GET("/check_health", checkHealth)
 	router.Run("localhost:8000")
 }
