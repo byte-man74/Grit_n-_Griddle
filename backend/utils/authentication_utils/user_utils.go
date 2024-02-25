@@ -6,6 +6,13 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+func ValidatePhoneNumber(phone_number string) error {
+	if len(phone_number) != 11 {
+		return errors.New("Invalid phone number")
+	}
+	return nil
+}
+
 func generatePasswordHash(password string) (string, error) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
