@@ -1,4 +1,4 @@
-package userModel
+package UserModel
 
 type User struct {
 	Phone_number  string `gorm:"primaryKey" json:"phone_number"`
