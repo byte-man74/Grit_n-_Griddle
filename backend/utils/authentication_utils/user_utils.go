@@ -8,7 +8,7 @@ import (
 
 func ValidatePhoneNumber(phone_number string) error {
 	if len(phone_number) != 11 {
-		return errors.New("Invalid phone number")
+		return errors.New("invalid phone number")
 	}
 	return nil
 }
