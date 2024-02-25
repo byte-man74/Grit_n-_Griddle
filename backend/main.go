@@ -3,10 +3,16 @@
 package main
 
 import (
-	"fmt"
+	// "fmt"
+	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
+func checkHealth(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"status": "Hello World"})
+}
 func main() {
-	fmt.Println("Hello, Go Project!")
+	router := gin.Default()
+	router.GET("/check_health", checkHealth)
+	router.Run("localhost:8000")
 }
