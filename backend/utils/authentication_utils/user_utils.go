@@ -10,7 +10,9 @@ import (
 
 func ValidatePhoneNumber(phone_number string) error {
 	if len(phone_number) != 11 {
-		return errors.New("invalid phone number")
+		errorMessage := "invalid phone number"
+		fmt.Println("Error:", errorMessage)
+		return errors.New(errorMessage)
 	}
 
 	// should also check here to see if the phone number exists already

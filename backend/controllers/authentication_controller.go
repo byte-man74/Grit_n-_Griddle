@@ -1,9 +1,11 @@
-package AuthenticationController
+package controllers
 
 import (
+	"fmt"
+	"net/http"
+
 	"github.com/byte-man74/Grit_n-_Griddle/backend/utils/authentication_utils"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func CreateAccount(c *gin.Context) {
@@ -22,18 +24,20 @@ func CreateAccount(c *gin.Context) {
 		return
 	}
 
+	//? my phone number validation happens here
 	number_validation_status := UserUtils.ValidatePhoneNumber(userPayload.Phone_number)
-
 	if number_validation_status != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": number_validation_status})
+		fmt.Println(number_validation_status)
+		c.JSON(http.StatusBadRequest, gin.H{"error": number_validation_status.Error()})
 		return
 	}
 
-	hashed_password, password_err := UserUtils.ValidateAndHashPassword(userPayload.Password)
 	//this guy here is validating and hashing the password
+	hashed_password, password_err := UserUtils.ValidateAndHashPassword(userPayload.Password)
 	if password_err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": password_err.Error()})
 		return
 	}
 
+	c.JSON(http.StatusOK, gin.H{"hashed_password": hashed_password})
 }

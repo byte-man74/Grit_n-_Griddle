@@ -3,10 +3,10 @@ package main
 
 import (
 	// "fmt"
-	"net/http"
-
+	"github.com/byte-man74/Grit_n-_Griddle/backend/controllers"
 	"github.com/byte-man74/Grit_n-_Griddle/backend/initializers"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func init() {
@@ -19,6 +19,7 @@ func main() {
 
 	//okay this guy works smoothly
 	router.GET("/check_health", checkHealth)
+	router.POST("/auth", controllers.CreateAccount)
 	router.Run("localhost:8000")
 }
 
