@@ -1,8 +1,10 @@
-// userUtils.go
-package userUtils
+package UserUtils
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"errors"
+	"fmt"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -10,6 +12,8 @@ func ValidatePhoneNumber(phone_number string) error {
 	if len(phone_number) != 11 {
 		return errors.New("invalid phone number")
 	}
+
+	// should also check here to see if the phone number exists already
 	return nil
 }
 
@@ -21,19 +25,32 @@ func generatePasswordHash(password string) (string, error) {
 	return string(hashedPassword), nil
 }
 
-func ValidateAndHashPassword(password string) (string, bool, error) {
+func ValidateAndHashPassword(password string) (string, error) {
 	if password == "" {
-		return "", false, errors.New("password must not be empty")
+		return "", errors.New("password must not be empty")
 	}
 
 	if len(password) <= 5 {
-		return "", false, errors.New("password must be at least 6 characters")
+		return "", errors.New("password must be at least 6 characters")
 	}
 
 	hashedPassword, err := generatePasswordHash(password)
 	if err != nil {
-		return "", false, errors.New("error generating password hash")
+		return "", errors.New("error generating password hash")
 	}
 
-	return hashedPassword, true, nil
+	return hashedPassword, nil
+}
+
+func GenerateToken(phone_number string, hashedPassword string) (string, error) {
+	// Concatenate phone_number and hashedPassword to create a basic token
+	basicToken := fmt.Sprintf("%s:%s", phone_number, hashedPassword)
+
+	// Hash the basic token using SHA-256
+	hashedToken := sha256.Sum256([]byte(basicToken))
+
+	// Convert the hashed token to a hexadecimal string
+	tokenString := hex.EncodeToString(hashedToken[:])
+
+	return tokenString, nil
 }

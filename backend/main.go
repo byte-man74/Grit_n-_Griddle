@@ -3,17 +3,24 @@ package main
 
 import (
 	// "fmt"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/byte-man74/Grit_n-_Griddle/backend/initializers"
+	"github.com/gin-gonic/gin"
 )
 
-func checkHealth(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"status": "Hello World"})
+func init() {
+	initializers.LoadEnvVariables()
 }
+
 func main() {
 	router := gin.Default()
 
 	//okay this guy works smoothly
 	router.GET("/check_health", checkHealth)
 	router.Run("localhost:8000")
+}
+
+func checkHealth(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"status": "Hello World"})
 }
