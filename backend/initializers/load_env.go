@@ -3,7 +3,6 @@ package initializers
 import (
 	"fmt"
 	"github.com/joho/godotenv"
-	"os"
 )
 
 func LoadEnvVariables() {
