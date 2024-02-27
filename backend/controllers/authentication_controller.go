@@ -7,6 +7,7 @@ import (
 	"github.com/byte-man74/Grit_n-_Griddle/backend/models"
 	"github.com/byte-man74/Grit_n-_Griddle/backend/utils/authentication_utils"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 	"log"
 	"net/http"
@@ -106,9 +107,16 @@ func GetToken(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, user)
 	//check if password also match
-	// hashed_password, _ := UserUtils.ValidateAndHashPassword(loginPayload.Password)
-	// its just weird if i'm going to be raising password too short on login😂
+	// Assuming storedHash is the previously hashed password retrieved from the database
+	err := bcrypt.CompareHashAndPassword([]byte(user.Password_Hash), []byte(loginPayload.Password))
+	if err != nil {
+		// Passwords don't match
+		c.JSON(http.StatusOK, gin.H{"error": "Incorrect password"})
+		return
+	}
+
+	//aha you've passed my test
+	c.JSON(http.StatusOK, gin.H{"data": user.Token})
 
 }
