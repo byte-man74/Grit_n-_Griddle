@@ -41,7 +41,6 @@ We welcome contributions! Feel free to open issues or submit pull requests to im
 
 This project is licensed under the [MIT License](LICENSE.md).
 
-```
 Grit_n-_Griddle
 ├─ .git
 │  ├─ COMMIT_EDITMSG
@@ -272,8 +271,7 @@ Grit_n-_Griddle
 │        └─ user_utils.go
 └─ reference.md
 
-```
-```
+
 Grit_n-_Griddle
 ├─ .git
 │  ├─ COMMIT_EDITMSG
