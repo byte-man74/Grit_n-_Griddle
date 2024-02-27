@@ -56,3 +56,13 @@ func GenerateToken(phone_number string, hashedPassword string) (string, error) {
 
 	return tokenString, nil
 }
+
+func GenerateAvatarUrl(phone_number string) string {
+	// Assuming phone_number is the seed for the avatar
+	seed := phone_number
+
+	// Concatenate the seed to the DiceBear Avatars API URL
+	url := "https://api.dicebear.com/7.x/micah/svg?seed=" + seed
+
+	return url
+}

@@ -30,7 +30,7 @@ func CreateAccount(c *gin.Context) {
 		return
 	}
 
-	//? my phone number validation happens here
+	// my phone number validation happens here
 	number_validation_status := AuthUtils.ValidatePhoneNumber(userPayload.Phone_number)
 	if number_validation_status != nil {
 		fmt.Println(number_validation_status)
@@ -51,6 +51,9 @@ func CreateAccount(c *gin.Context) {
 	// i'm not passing any error here because i would'nt want this process to break
 	// just because user could'nt generate a token. we can always do that
 
+	//generate user avatar
+	url := AuthUtils.GenerateAvatarUrl(userPayload.Phone_number)
+
 	//database creation
 	user := models.User{
 		Phone_number:  userPayload.Phone_number,
@@ -59,6 +62,7 @@ func CreateAccount(c *gin.Context) {
 		Is_active:     true,
 		Password_Hash: hashed_password,
 		Token:         token,
+		Avatar_url:    url,
 	}
 	result := initializers.DB.Create(&user)
 
