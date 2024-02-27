@@ -12,3 +12,11 @@ type User struct {
 
 //token here is just what i would be passing around when a user is authenticated or logged in
 // i would be passing it around in all the headers
+
+type UserStats struct {
+	ID                  string `json:"id"`
+	User                string `json:"user"`
+	Number_of_purchases int    `json:"number_of_purchases"`
+	Number_of_refferals int    `json:"number_of_refferals"`
+	Date_joined         int    `json:"date_joined"`
+}
