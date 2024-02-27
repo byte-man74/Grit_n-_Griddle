@@ -2,12 +2,13 @@ package controllers
 
 import (
 	"fmt"
-	"net/http"
-
 	"github.com/byte-man74/Grit_n-_Griddle/backend/initializers"
 	"github.com/byte-man74/Grit_n-_Griddle/backend/models"
 	"github.com/byte-man74/Grit_n-_Griddle/backend/utils/authentication_utils"
 	"github.com/gin-gonic/gin"
+	"log"
+	"net/http"
+	"strings"
 )
 
 func CreateAccount(c *gin.Context) {
@@ -43,7 +44,20 @@ func CreateAccount(c *gin.Context) {
 
 	user := models.User{Phone_number: userPayload.Phone_number, First_name: userPayload.First_name, Last_name: userPayload.Last_name, Is_active: true, Password_Hash: hashed_password}
 
-	initializers.DB.Create(&user)
+	result := initializers.DB.Create(&user)
 
-	c.JSON(http.StatusOK, gin.H{"user": user})
+	if result.Error != nil {
+		if strings.Contains(result.Error.Error(), "duplicate key value") {
+			// User with the given phone number already exists
+			c.JSON(http.StatusBadRequest, gin.H{"error": "A user named shereef is already using this password. try another one"})
+			return
+		}
+		log.Println(result.Error)
+
+		// generic error message in case something else happens
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{"data": user})
 }
