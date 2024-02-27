@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/byte-man74/Grit_n-_Griddle/backend/initializers"
+	"github.com/byte-man74/Grit_n-_Griddle/backend/models"
 	"github.com/byte-man74/Grit_n-_Griddle/backend/utils/authentication_utils"
 	"github.com/gin-gonic/gin"
 )
@@ -39,5 +41,9 @@ func CreateAccount(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"hashed_password": hashed_password})
+	user := models.User{Phone_number: userPayload.Phone_number, First_name: userPayload.First_name, Last_name: userPayload.Last_name, Is_active: true, Password_Hash: hashed_password}
+
+	initializers.DB.Create(&user)
+
+	c.JSON(http.StatusOK, gin.H{"user": user})
 }
