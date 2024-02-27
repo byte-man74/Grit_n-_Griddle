@@ -62,7 +62,7 @@ func CreateAccount(c *gin.Context) {
 	if result.Error != nil {
 		if strings.Contains(result.Error.Error(), "duplicate key value") {
 			// User with the given phone number already exists
-			c.JSON(http.StatusBadRequest, gin.H{"error": "A user named shereef is already using this password. try another one"})
+			c.JSON(http.StatusBadRequest, gin.H{"error": "A user with the given phone number already exists"})
 			return
 		}
 		log.Println(result.Error)
