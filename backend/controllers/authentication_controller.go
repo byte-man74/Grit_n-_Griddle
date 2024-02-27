@@ -111,6 +111,11 @@ func GetToken(c *gin.Context) {
 		return
 	}
 
+	//check user active status
+	if !user.Is_active {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "User account is not active"})
+	}
+
 	//check if password also match
 	// Assuming storedHash is the previously hashed password retrieved from the database
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password_Hash), []byte(loginPayload.Password))
