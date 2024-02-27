@@ -1,11 +1,13 @@
 package controllers
 
 import (
+	"errors"
 	"fmt"
 	"github.com/byte-man74/Grit_n-_Griddle/backend/initializers"
 	"github.com/byte-man74/Grit_n-_Griddle/backend/models"
 	"github.com/byte-man74/Grit_n-_Griddle/backend/utils/authentication_utils"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 	"log"
 	"net/http"
 	"strings"
@@ -73,4 +75,40 @@ func CreateAccount(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, gin.H{"data": user})
+}
+
+func GetToken(c *gin.Context) {
+	type LoginCredentials struct {
+		Phone_number string `json:"phone_number"`
+		Password     string `json:"password"`
+	}
+
+	var loginPayload LoginCredentials
+
+	if err := c.ShouldBindJSON(&loginPayload); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request payload"})
+		return
+	}
+
+	// Check if the phone number exists in the database
+	var user models.User
+	result := initializers.DB.Where("phone_number = ?", loginPayload.Phone_number).First(&user)
+
+	if result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			// Phone number not found
+			c.JSON(http.StatusNotFound, gin.H{"error": "Phone number not found"})
+			return
+		}
+
+		// Handle other database errors
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to query the database"})
+		return
+	}
+
+	c.JSON(http.StatusOK, user)
+	//check if password also match
+	// hashed_password, _ := UserUtils.ValidateAndHashPassword(loginPayload.Password)
+	// its just weird if i'm going to be raising password too short on login😂
+
 }

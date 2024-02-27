@@ -19,7 +19,9 @@ func main() {
 
 	//okay this guy works smoothly
 	router.GET("/check_health", checkHealth)
+
 	router.POST("/auth", controllers.CreateAccount)
+	router.POST("/login", controllers.GetToken)
 	router.Run("localhost:8000")
 }
 
