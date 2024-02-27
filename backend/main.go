@@ -7,7 +7,6 @@ import (
 	"github.com/byte-man74/Grit_n-_Griddle/backend/initializers"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"os"
 )
 
 func init() {
