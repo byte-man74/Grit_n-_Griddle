@@ -5,6 +5,7 @@ type FoodItem struct {
 	Name        string `json:"name"`
 	Is_in_Stock bool   `json:"is_in_stock"`
 	Amount      int64  `json:"amount"`
+	Description string `json:"description"`
 }
 
 type FoodItemMedia struct {
