@@ -42,8 +42,21 @@ func CreateAccount(c *gin.Context) {
 		return
 	}
 
-	user := models.User{Phone_number: userPayload.Phone_number, First_name: userPayload.First_name, Last_name: userPayload.Last_name, Is_active: true, Password_Hash: hashed_password}
+	//generate an authorization token here
+	token, _ := UserUtils.GenerateToken(userPayload.Phone_number, hashed_password)
 
+	// i'm not passing any error here because i would'nt want this process to break
+	// just because user could'nt generate a token. we can always do that
+
+	//database creation
+	user := models.User{
+		Phone_number:  userPayload.Phone_number,
+		First_name:    userPayload.First_name,
+		Last_name:     userPayload.Last_name,
+		Is_active:     true,
+		Password_Hash: hashed_password,
+		Token:         token,
+	}
 	result := initializers.DB.Create(&user)
 
 	if result.Error != nil {
