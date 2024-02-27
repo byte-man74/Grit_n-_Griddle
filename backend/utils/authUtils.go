@@ -5,6 +5,9 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+
+	"github.com/byte-man74/Grit_n-_Griddle/backend/initializers"
+	"github.com/byte-man74/Grit_n-_Griddle/backend/models"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -65,4 +68,15 @@ func GenerateAvatarUrl(phone_number string) string {
 	url := "https://api.dicebear.com/7.x/micah/svg?seed=" + seed
 
 	return url
+}
+
+func ValidateAndExtractUser(token string) (models.User, error) {
+	var user models.User
+
+	result := initializers.DB.Where("token = ?", token).First(&user)
+	if result.Error != nil {
+		return user, result.Error
+	}
+
+	return user, nil
 }
