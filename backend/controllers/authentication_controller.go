@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/byte-man74/Grit_n-_Griddle/backend/initializers"
 	"github.com/byte-man74/Grit_n-_Griddle/backend/models"
-	"github.com/byte-man74/Grit_n-_Griddle/backend/utils/authentication_utils"
+	"github.com/byte-man74/Grit_n-_Griddle/backend/utils"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
@@ -31,7 +31,7 @@ func CreateAccount(c *gin.Context) {
 	}
 
 	//? my phone number validation happens here
-	number_validation_status := UserUtils.ValidatePhoneNumber(userPayload.Phone_number)
+	number_validation_status := AuthUtils.ValidatePhoneNumber(userPayload.Phone_number)
 	if number_validation_status != nil {
 		fmt.Println(number_validation_status)
 		c.JSON(http.StatusBadRequest, gin.H{"error": number_validation_status.Error()})
@@ -39,14 +39,14 @@ func CreateAccount(c *gin.Context) {
 	}
 
 	//this guy here is validating and hashing the password
-	hashed_password, password_err := UserUtils.ValidateAndHashPassword(userPayload.Password)
+	hashed_password, password_err := AuthUtils.ValidateAndHashPassword(userPayload.Password)
 	if password_err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": password_err.Error()})
 		return
 	}
 
 	//generate an authorization token here
-	token, _ := UserUtils.GenerateToken(userPayload.Phone_number, hashed_password)
+	token, _ := AuthUtils.GenerateToken(userPayload.Phone_number, hashed_password)
 
 	// i'm not passing any error here because i would'nt want this process to break
 	// just because user could'nt generate a token. we can always do that

@@ -1,4 +1,4 @@
-package UserUtils
+package AuthUtils
 
 import (
 	"crypto/sha256"
