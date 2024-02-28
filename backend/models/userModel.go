@@ -21,8 +21,8 @@ type User struct {
 
 type UserStats struct {
 	ID                  string `json:"id"`
-	User                User   `gorm:"foreignKey:UserPhoneNumber" json:"user"`
-	UserPhoneNumber     string `json:"user_phone_number"`
 	Number_of_purchases int    `json:"number_of_purchases"`
 	Number_of_refferals int    `json:"number_of_refferals"`
+	Date_joined         int    `json:"date_joined"`
+	User                User   `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
