@@ -25,6 +25,6 @@ type OrderFoodDetail struct {
 	ID       string   `json:"id"`
 	FoodID   int64    `json:"food_id"`
 	Quantity int64    `json:"quantity"`
-	OrderID  int64    `json:"order_id"`
-	Food     FoodItem ``
+	OrderID  *Orders  `json:"order_id"`
+	Food     FoodItem `gorm:"foreignKey:ID" json:"food_detail"`
 }
