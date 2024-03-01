@@ -11,5 +11,5 @@ func init() {
 }
 
 func main() {
-	initializers.DB.AutoMigrate(&models.User{})
+	initializers.DB.AutoMigrate(&models.User{}, &models.FoodItem{}, &models.OrderFoodDetail{}, models.Orders{}, models.UserStats{}, models.FoodItemMedia{})
 }
