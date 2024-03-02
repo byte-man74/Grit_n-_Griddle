@@ -15,7 +15,7 @@ func init() {
 func main() {
 	err := initializers.DB.AutoMigrate(
 		&models.User{},
-		&models.UserStats{},
+		&models.UserStat{},
 		// &models.FoodItem{},
 		// &models.FoodItemMedia{},
 		// &models.Orders{},
