@@ -1,7 +1,11 @@
 package models
 
+import (
+	"gorm.io/gorm"
+)
+
 type FoodItem struct {
-	ID          int64           `json:"id"`
+	gorm.Model
 	Name        string          `json:"name"`
 	Is_in_Stock bool            `json:"is_in_stock"`
 	Amount      int64           `json:"amount"`
@@ -10,8 +14,7 @@ type FoodItem struct {
 }
 
 type FoodItemMedia struct {
-	ID         int64     `json:"id"`
-	FoodItemID int64     `json:"food_item_id"`
-	FoodItem   *FoodItem `json:"food_item"`
-	MediaUrl   string    `json:"media_url"`
+	ID         int64  `json:"id"`
+	FoodItemID int64  `json:"food_item_id"`
+	MediaUrl   string `json:"media_url"`
 }
