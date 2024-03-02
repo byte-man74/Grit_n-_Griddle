@@ -16,10 +16,10 @@ func main() {
 	err := initializers.DB.AutoMigrate(
 		&models.User{},
 		&models.UserStat{},
-		// &models.FoodItem{},
-		// &models.FoodItemMedia{},
-		// &models.Orders{},
-		// &models.OrderFoodDetail{},
+		&models.FoodItem{},
+		&models.FoodItemMedia{},
+		&models.Orders{},
+		&models.OrderFoodDetail{},
 	)
 	if err != nil {
 		fmt.Println(err)

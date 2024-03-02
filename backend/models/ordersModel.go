@@ -16,16 +16,15 @@ type Orders struct {
 	ReferredBy      string    `json:"referred_by"`
 	PaymentStatus   bool      `json:"payment_status"`
 	AmountPaid      int64     `json:"amount_paid"`
-	User            User      `gorm:"foreignKey:Phone_number" json:"user"`
-	CreatedAt       time.Time `gorm:"autoCreateTime" json:"created_at"`
-	UpdatedAt       time.Time `gorm:"autoUpdateTime" json:"updated_at"`
+	User            User
+	UserID          uint
 	OrderFoodDetail []OrderFoodDetail
 }
 
 type OrderFoodDetail struct {
 	gorm.Model
-	FoodID   int64 `json:"food_id"`
-	Quantity int64 `json:"quantity"`
-	OrderID  uint
-	FoodiD   []FoodItem
+	Quantity   int64 `json:"quantity"`
+	OrdersID   uint
+	FoodItem   FoodItem
+	FoodItemID uint
 }

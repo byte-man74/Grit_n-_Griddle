@@ -6,15 +6,15 @@ import (
 
 type FoodItem struct {
 	gorm.Model
-	Name        string          `json:"name"`
-	Is_in_Stock bool            `json:"is_in_stock"`
-	Amount      int64           `json:"amount"`
-	Description string          `json:"description"`
-	Media       []FoodItemMedia `json:"media" gorm:"foreignKey:ID"`
+	Name          string `json:"name"`
+	Is_in_Stock   bool   `json:"is_in_stock"`
+	Amount        int64  `json:"amount"`
+	Description   string `json:"description"`
+	FoodItemMedia []FoodItemMedia
 }
 
 type FoodItemMedia struct {
-	ID         int64  `json:"id"`
-	FoodItemID int64  `json:"food_item_id"`
+	gorm.Model
 	MediaUrl   string `json:"media_url"`
+	FoodItemID uint
 }
