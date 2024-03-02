@@ -79,6 +79,20 @@ func CreateAccount(c *gin.Context) {
 		return
 	}
 
+	//create a user stats object
+	userStats := models.UserStat{
+		Number_of_purchases: 0,
+		Number_of_refferals: 0,
+		UserID:              user.ID,
+	}
+
+	err := initializers.DB.Create(&userStats)
+
+	//i don't want any thing to break here if account doesn't get created
+	if err.Error != nil {
+		log.Println(err.Error)
+	}
+
 	c.JSON(http.StatusCreated, gin.H{"data": user})
 }
 
@@ -124,7 +138,6 @@ func GetToken(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"error": "Incorrect password"})
 		return
 	}
-
 	//aha you've passed my test
 	c.JSON(http.StatusOK, gin.H{"data": user.Token})
 
