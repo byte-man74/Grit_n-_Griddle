@@ -6,9 +6,9 @@ import (
 
 type FoodItem struct {
 	gorm.Model
-	Name          string `json:"name"`
+	Name          string `json:"name" binding:"required"`
 	Is_in_Stock   bool   `json:"is_in_stock"`
-	Amount        int64  `json:"amount"`
+	Amount        int64  `json:"amount" binding:"required"`
 	Description   string `json:"description"`
 	FoodItemMedia []FoodItemMedia
 }
