@@ -1,13 +1,14 @@
 package controllers
 
 import (
-	"log"
-	"net/http"
-	"strconv"
-
 	"github.com/byte-man74/Grit_n-_Griddle/backend/initializers"
 	"github.com/byte-man74/Grit_n-_Griddle/backend/models"
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
+	"log"
+	"net/http"
+	"strconv"
+	"strings"
 )
 
 func GetFoodController(c *gin.Context) {
@@ -57,13 +58,18 @@ func CreateFoodItem(c *gin.Context) {
 	var foodItemPayload models.FoodItem
 
 	if err := c.ShouldBindJSON(&foodItemPayload); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request payload"})
+		var validationErrs []string
+		for _, fieldError := range err.(validator.ValidationErrors) {
+			validationErrs = append(validationErrs, fieldError.Field()+" is required")
+		}
+		errorMessage := strings.Join(validationErrs, ", ")
+		c.JSON(http.StatusBadRequest, gin.H{"error": errorMessage})
 		return
 	}
 
 	foodModel := models.FoodItem{
 		Name:        foodItemPayload.Name,
-		Amount:      foodItemPayload.Amount,
+		Price:       foodItemPayload.Price,
 		Description: foodItemPayload.Description,
 	}
 
