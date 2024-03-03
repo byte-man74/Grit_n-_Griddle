@@ -44,10 +44,34 @@ func GetFoodController(c *gin.Context) {
 		return
 	}
 
+	//i would return a 404 here when the user starts spamming invalid page number
 	if len(FoodData) == 0 && page > 1 {
 		c.JSON(http.StatusNotFound, gin.H{"message": "No data found for the requested page"})
 		return
 	}
 
 	c.JSON(http.StatusOK, FoodData)
+}
+
+func CreateFoodItem(c *gin.Context) {
+	var foodItemPayload models.FoodItem
+
+	if err := c.ShouldBindJSON(&foodItemPayload); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request payload"})
+		return
+	}
+
+	foodModel := models.FoodItem{
+		Name:        foodItemPayload.Name,
+		Amount:      foodItemPayload.Amount,
+		Description: foodItemPayload.Description,
+	}
+
+	//create item in DB
+	result := initializers.DB.Create(&foodModel)
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": result.Error})
+	}
+
+	c.JSON(http.StatusCreated, gin.H{"data": foodModel})
 }

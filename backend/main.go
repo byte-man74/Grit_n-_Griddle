@@ -27,7 +27,8 @@ func main() {
 	//a router group for food-related routes
 	foodGroup := router.Group("/food")
 	{
-		foodGroup.GET("/get_food", controllers.GetFoodController)
+		foodGroup.GET("/get_all", controllers.GetFoodController)
+		foodGroup.POST("add", controllers.CreateFoodItem)
 	}
 
 	// Other routes can be added outside the groups
