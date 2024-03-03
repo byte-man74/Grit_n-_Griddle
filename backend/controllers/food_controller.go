@@ -81,3 +81,8 @@ func CreateFoodItem(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, gin.H{"data": foodModel})
 }
+
+//edit food
+// is out of stock
+
+//admin view
