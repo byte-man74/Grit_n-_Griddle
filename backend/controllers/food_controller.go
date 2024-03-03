@@ -44,7 +44,7 @@ func GetFoodController(c *gin.Context) {
 		return
 	}
 
-	if len(FoodData) == 0 {
+	if len(FoodData) == 0 && page > 1 {
 		c.JSON(http.StatusNotFound, gin.H{"message": "No data found for the requested page"})
 		return
 	}
