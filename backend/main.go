@@ -17,14 +17,20 @@ func init() {
 func main() {
 	router := gin.Default()
 
-	// Create a router group for authentication routes
+	//a router group for authentication routes
 	authGroup := router.Group("/auth")
 	{
 		authGroup.POST("/create_account", controllers.CreateAccount)
 		authGroup.POST("/login", controllers.GetToken)
 	}
 
-	// Other routes can be added outside the group
+	//a router group for food-related routes
+	foodGroup := router.Group("/food")
+	{
+		foodGroup.GET("/get_food", controllers.GetFoodController)
+	}
+
+	// Other routes can be added outside the groups
 	router.GET("/check_health", checkHealth)
 
 	router.Run("localhost:8000")
